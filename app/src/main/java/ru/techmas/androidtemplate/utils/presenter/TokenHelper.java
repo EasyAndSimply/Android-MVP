@@ -1,0 +1,34 @@
+package ru.techmas.androidtemplate.utils.presenter;
+
+import android.content.SharedPreferences;
+
+public class TokenHelper {
+
+    private static final String PREF_TOKEN_API = "tokenAPI";
+    private SharedPreferences preferences;
+    private String token;
+
+    public TokenHelper(SharedPreferences preferences) {
+        this.preferences = preferences;
+    }
+
+    public String getToken() {
+        if (token == null) token = preferences.getString(PREF_TOKEN_API, "");
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+        preferences.edit().putString(PREF_TOKEN_API, token).apply();
+    }
+
+    public boolean isFirstRun() {
+        return !preferences.contains(PREF_TOKEN_API);
+    }
+
+    public void exit() {
+        preferences.edit().clear().apply();
+    }
+
+}
+
